@@ -26,19 +26,19 @@ const categories = [
 let pathCache = {};
 
 const validateInputs = (categories, categoryName) => {
-  if (!categories || !categoryName) {
-    throw new Error('Missing required params');
+  const checks = [
+    { test: () => categories && categoryName, message: 'Missing required params' },
+    { test: () => Array.isArray(categories), message: 'Categories must be an array' },
+    { test: () => typeof categoryName === "string", message: 'Category name must be a string' },
+  ];
+
+  for (const { test, message } of checks) {
+    if (!test()) {
+      throw new Error(message);
+    }
   }
 
-  if (!Array.isArray(categories)) {
-    throw new Error('Categories must be an array');
-  }
-
-  if (typeof categoryName !== "string") {
-    throw new Error('Category name must be a string');
-  }
-
-  return true
+  return true;
 }
 
 // TO-DO: Implement this function
@@ -76,4 +76,5 @@ const getCategoryPath = (categories, categoryName) => {
 console.log(getCategoryPath(categories, 'category4')); // should output: '/category1/category3/category4'
 console.log(getCategoryPath(categories, 'category2')); // should output: '/category1/category2'
 console.log(getCategoryPath(categories, 'category5')); // should output: '/category5'
+console.log(getCategoryPath([], 123)); // should output: null
 
