@@ -32,11 +32,11 @@ const validateInputs = (categories, categoryName) => {
     { test: () => typeof categoryName === "string", message: 'Category name must be a string' },
   ];
 
-  for (const { test, message } of checks) {
+  checks.forEach(({ test, message }) => {
     if (!test()) {
       throw new Error(message);
     }
-  }
+  })
 
   return true;
 }
@@ -76,5 +76,4 @@ const getCategoryPath = (categories, categoryName) => {
 console.log(getCategoryPath(categories, 'category4')); // should output: '/category1/category3/category4'
 console.log(getCategoryPath(categories, 'category2')); // should output: '/category1/category2'
 console.log(getCategoryPath(categories, 'category5')); // should output: '/category5'
-console.log(getCategoryPath([], 123)); // should output: null
 
